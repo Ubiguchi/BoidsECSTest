@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <DefineConstants></DefineConstants>
+    <Optimize>true</Optimize>
+    <Configurations>Debug;Release</Configurations>
+    <ApplicationIcon />
+    <OutputType>WinExe</OutputType>
+    <StartupObject />
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="..\resource\square.png" Link="Content\square.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\resource\font.xnb" Link="Content\font.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DefaultEcs" Version="0.14.2" />
+    <PackageReference Include="MonoGame.Framework.DesktopGL.Core" Version="3.8.0.13" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Nez">
+      <HintPath>dependencies\Nez.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>
