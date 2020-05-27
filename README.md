@@ -5,7 +5,7 @@ It is intended as a preliminary investigation to decide if there's enough perfor
 
 <a name='Performance'></a>
 # Performance
-While the testing is currently unfair and very much finger-in-the-air, the initial results are as below.
+While the testing is extremely unfair and very much finger-in-the-air, the initial results are below. I should be clear that I fully expect the Nez numbers will see a significant improvement once I've verified the implementation, added multiple threads, and balanced the spatial grid. However, given DefaultECS has a data-driven implementation, my hypothesis is it'll do significnatly better when simulating large numbers of entities.
 
 ```
 OS=Windows 10.x
