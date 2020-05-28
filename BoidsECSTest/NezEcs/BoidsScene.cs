@@ -1,6 +1,7 @@
 ﻿namespace BoidsECSTest.NezEcs
 {
-	using System.IO;
+    using System;
+    using System.IO;
 	using BoidsECSTest.NezEcs.Components;
 	using BoidsECSTest.NezEcs.Systems;
 	using Microsoft.Xna.Framework;
@@ -29,6 +30,8 @@
 			//var nezFont = new NezSpriteFont(spriteFont);
 			//var fpsCounter = CreateEntity($"fpsCounter");
 			//fpsCounter.AddComponent(new FramesPerSecondCounter(nezFont, Color.White));
+
+			Core.DebugRenderEnabled = false;
 
 			Texture2D square;
 			using (Stream stream = File.OpenRead(@"Content\square.png"))
@@ -61,15 +64,17 @@
 
 				entity.AddComponent(new Velocity { Value = velocity * (TestConfiguration.MinVelocity + ((float)random.NextDouble() * (TestConfiguration.MaxVelocity - TestConfiguration.MinVelocity))) });
 				entity.AddComponent<Acceleration>();
-				entity.AddComponent(new Behavior());
 				entity.AddComponent(new BoxCollider());
+				entity.AddComponent(new CellId(0, 0));
 			}
 		}
 
 		private void CreateSystems()
 		{
-			AddEntityProcessor(new BehaviorSystem());
-			AddEntityProcessor(new BoidsSystem());
+			var behaviorCollationSystem = new BehaviorSystem(TestConfiguration.CellColumnCount, TestConfiguration.CellRowCount, Physics.SpatialHashCellSize);
+			AddEntityProcessor(behaviorCollationSystem);
+			//AddEntityProcessor(new BehaviorSystem());
+			AddEntityProcessor(new BoidsSystem(behaviorCollationSystem));
 			AddEntityProcessor(new MoveSystem());
 		}
 	}

@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "cIq3nTR2OdGZ3MYz+Kr61u2VdTfMhb4AgKzj7AedjhzqpgJDZPFmj1uV2WsBvI5098VwRuewXZbTqErxZDf/Lg==",
+  "success": true,
+  "projectFilePath": "C:\\Repos\\BoidsECSTest\\BoidsECSTest\\BoidsECSTest.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ubigu\\.nuget\\packages\\defaultecs\\0.14.2\\defaultecs.0.14.2.nupkg.sha512",
+    "C:\\Users\\ubigu\\.nuget\\packages\\monogame.framework.desktopgl.core\\3.8.0.13\\monogame.framework.desktopgl.core.3.8.0.13.nupkg.sha512"
+  ],
+  "logs": []
+}

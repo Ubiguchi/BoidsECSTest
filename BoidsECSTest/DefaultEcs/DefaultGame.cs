@@ -69,7 +69,7 @@ namespace BoidsECSTest.DefaultEcs
 
             _world = new World();
 
-            _runner = new DefaultParallelRunner(Environment.ProcessorCount);
+            _runner = new DefaultParallelRunner(TestConfiguration.DegreeOfParallelism);
             _system = new SequentialSystem<float>(
                 new BehaviorSystem(_world, _runner),
                 new BoidsSystem(_world, _runner),

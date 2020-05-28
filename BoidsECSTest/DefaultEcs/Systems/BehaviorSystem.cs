@@ -7,21 +7,21 @@ using Microsoft.Xna.Framework;
 
 namespace BoidsECSTest.DefaultEcs.Systems
 {
-    [With(typeof(GridId), typeof(Behavior))]
+    [With(typeof(CellId), typeof(Behavior))]
     public sealed class BehaviorSystem : AEntitySystem<float>
     {
         private readonly World _world;
-        private readonly EntitiesMap<GridId> _grid;
+        private readonly EntitiesMap<CellId> _grid;
 
         public BehaviorSystem(World world, IParallelRunner runner) : base(world, runner)
         {
             _world = world;
-            _grid = world.GetEntities().With<GridId>().With<Velocity>().With<DrawInfo>().AsMultiMap<GridId>();
+            _grid = world.GetEntities().With<CellId>().With<Velocity>().With<DrawInfo>().AsMultiMap<CellId>();
         }
 
         protected override void Update(float state, ReadOnlySpan<Entity> entities)
         {
-            Components<GridId> gridIds = _world.GetComponents<GridId>();
+            Components<CellId> gridIds = _world.GetComponents<CellId>();
             Components<Behavior> behaviors = _world.GetComponents<Behavior>();
             Components<Velocity> velocities = _world.GetComponents<Velocity>();
             Components<DrawInfo> drawInfos = _world.GetComponents<DrawInfo>();

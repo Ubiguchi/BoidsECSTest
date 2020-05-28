@@ -7,17 +7,17 @@ using Microsoft.Xna.Framework;
 
 namespace BoidsECSTest.DefaultEcs.Systems
 {
-    [With(typeof(DrawInfo), typeof(Acceleration), typeof(Velocity), typeof(GridId))]
+    [With(typeof(DrawInfo), typeof(Acceleration), typeof(Velocity), typeof(CellId))]
     public sealed class BoidsSystem : AEntitySystem<float>
     {
         private readonly World _world;
-        private readonly EntityMap<GridId> _grid;
+        private readonly EntityMap<CellId> _grid;
 
         public BoidsSystem(World world, IParallelRunner runner)
             : base(world, runner)
         {
             _world = world;
-            _grid = world.GetEntities().With<Behavior>().AsMap<GridId>();
+            _grid = world.GetEntities().With<Behavior>().AsMap<CellId>();
         }
 
         protected override void Update(float state, ReadOnlySpan<Entity> entities)
@@ -25,7 +25,7 @@ namespace BoidsECSTest.DefaultEcs.Systems
             Components<DrawInfo> drawInfos = _world.GetComponents<DrawInfo>();
             Components<Velocity> velocities = _world.GetComponents<Velocity>();
             Components<Acceleration> accelerations = _world.GetComponents<Acceleration>();
-            Components<GridId> gridIds = _world.GetComponents<GridId>();
+            Components<CellId> gridIds = _world.GetComponents<CellId>();
             Components<Behavior> behaviors = _world.GetComponents<Behavior>();
 
             foreach (ref readonly Entity entity in entities)
@@ -36,7 +36,7 @@ namespace BoidsECSTest.DefaultEcs.Systems
                 Vector2 cohesion = Vector2.Zero;
                 int neighborCount = 0;
 
-                foreach (GridId neighbor in gridIds[entity].GetNeighbors())
+                foreach (CellId neighbor in gridIds[entity].GetNeighbors())
                 {
                     Behavior behavior = behaviors[_grid[neighbor]];
 

@@ -2,8 +2,9 @@
 {
 	using Nez;
 	using Microsoft.Xna.Framework.Graphics;
+    using System;
 
-	public class NezGame : Core
+    public class NezGame : Core
     {
         public NezGame()
 			: base(TestConfiguration.ResolutionWidth, TestConfiguration.ResolutionHeight, TestConfiguration.IsFullScreen )
@@ -18,6 +19,8 @@
 			SetupScreen();
 
 			Content.RootDirectory = "Content";
+			Physics.SpatialHashCellSize = Math.Min(TestConfiguration.CellWidth, TestConfiguration.CellHeight);
+
 			Scene = new BoidsScene(this);
 		}
 

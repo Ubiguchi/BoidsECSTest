@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 
 namespace BoidsECSTest.DefaultEcs.Systems
 {
-    [With(typeof(DrawInfo), typeof(Velocity), typeof(Acceleration), typeof(GridId))]
+    [With(typeof(DrawInfo), typeof(Velocity), typeof(Acceleration), typeof(CellId))]
     public sealed class MoveSystem : AEntitySystem<float>
     {
         private readonly World _world;
@@ -26,7 +26,7 @@ namespace BoidsECSTest.DefaultEcs.Systems
             Components<DrawInfo> drawInfos = _world.GetComponents<DrawInfo>();
             Components<Velocity> velocities = _world.GetComponents<Velocity>();
             Components<Acceleration> accelerations = _world.GetComponents<Acceleration>();
-            Components<GridId> gridIds = _world.GetComponents<GridId>();
+            Components<CellId> gridIds = _world.GetComponents<CellId>();
 
             foreach (ref readonly Entity entity in entities)
             {
@@ -42,11 +42,11 @@ namespace BoidsECSTest.DefaultEcs.Systems
                 ref DrawInfo drawInfo = ref drawInfos[entity];
                 Vector2 newPosition = drawInfo.Position + (velocity * state);
 
-                GridId newId = newPosition.ToGridId();
+                CellId newId = newPosition.ToGridId();
                 if (!newId.Equals(gridIds[entity]))
                 {
-                    entity.Get<GridId>() = newId;
-                    _recorder.Record(entity).NotifyChanged<GridId>();
+                    entity.Get<CellId>() = newId;
+                    _recorder.Record(entity).NotifyChanged<CellId>();
                 }
                 drawInfo.Position = newPosition;
 

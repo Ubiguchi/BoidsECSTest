@@ -4,18 +4,28 @@
 	using Nez;
 	using Microsoft.Xna.Framework;
 	using System.Collections.Generic;
+    using System.Threading.Tasks;
 
-	public sealed class BoidsSystem : EntitySystem
+    public sealed class BoidsSystem : EntitySystem
 	{
-		public BoidsSystem()
+		private BehaviorSystem behaviorSystem;
+		private readonly ParallelOptions parallelOptions;
+
+		public BoidsSystem(BehaviorSystem behaviorSystem)
 			: base(new Matcher().All(typeof(DrawInfo), typeof(Acceleration), typeof(Velocity)))
 		{
+			this.behaviorSystem = behaviorSystem;
+			parallelOptions = new ParallelOptions
+			{
+				MaxDegreeOfParallelism = TestConfiguration.DegreeOfParallelism
+			};
 		}
 
 		protected override void Process(List<Entity> entities)
 		{
-			foreach (Entity entity in entities)
+			void ProcessEntity(int index)
 			{
+				var entity = entities[index];
 				Vector2 position = entity.GetComponent<DrawInfo>().Position;
 				Vector2 velocity = entity.GetComponent<Velocity>().Value;
 
@@ -24,7 +34,9 @@
 				Vector2 cohesion = Vector2.Zero;
 				int neighborCount = 0;
 
-				var behavior = entity.GetComponent<Behavior>();
+				var cellId = entity.GetComponent<CellId>();
+				var behavior = behaviorSystem.GetCellBehavior(cellId.Y, cellId.X);
+
 				if (behavior.Count > 0)
 				{
 					Vector2 offset = (position * behavior.Count) - behavior.Center;
@@ -51,6 +63,8 @@
 
 				entity.GetComponent<Acceleration>().Value = acceleration;
 			}
+
+			Parallel.For(0, entities.Count, parallelOptions, ProcessEntity);
 		}
 	}
 }
